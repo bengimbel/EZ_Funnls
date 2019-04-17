@@ -1,10 +1,20 @@
 import React from "react";
+import ResturantItem from "./ResturantItem";
 
 const RestaurantList = props => {
-  console.log(props, "props");
+  const { resturantData } = props;
+  const { cityName } = props;
   return (
     <div>
-      <h1>RESTURANT LIST</h1>
+      <h1>{cityName}</h1>
+      {resturantData !== null &&
+        resturantData.map(item => (
+          <ResturantItem
+            key={item.id}
+            resturantData={item}
+            saveResturant={props.saveResturant}
+          />
+        ))}
     </div>
   );
 };

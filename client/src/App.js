@@ -11,7 +11,8 @@ class App extends Component {
 
     this.state = {
       resturantData: null,
-      cityInfo: null
+      cityInfo: null,
+      visitedResturants: []
     };
   }
 
@@ -31,6 +32,19 @@ class App extends Component {
       .catch(err => console.log(err, "err"));
   };
 
+  saveResturantToVisitList = resturant => {
+    const { visitedResturants } = this.state;
+    const newList = [...visitedResturants];
+    if (newList.filter(item => item.id === resturant.id).length > 0) {
+      console.log("already in favorites");
+      return;
+    }
+    newList.unshift(resturant);
+    this.setState({
+      visitedResturants: newList
+    });
+  };
+
   render() {
     console.log(this.state, "state");
     const { resturantData } = this.state;
@@ -39,7 +53,11 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <SearchBar submitZipCode={this.executeSearch} />
-          <ResturantList resturantData={resturantData} cityName={cityInfo} />
+          <ResturantList
+            resturantData={resturantData}
+            cityName={cityInfo}
+            saveResturant={this.saveResturantToVisitList}
+          />
         </div>
       </div>
     );
