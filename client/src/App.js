@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-// import logo from "./logo.svg";
 import SearchBar from "./components/Searchbar";
-import { baseUrl, proxyurl, searchZipCodeUrl } from "./utils/Constants";
 import { fetchLocationByZipCode } from "./api/FetchLocationByZipCode";
+import { fetchResturantList } from "./api/FetchResturantList";
 import "./App.css";
-
-const API_KEY = `&key=${process.env.REACT_APP_API_KEY}`;
 
 class App extends Component {
   constructor(props) {
@@ -13,35 +10,24 @@ class App extends Component {
 
     this.state = {
       searchInfo: null,
-      data: null
+      resturantData: null
     };
   }
-  // componentDidMount() {
-  //   const finalUrl = proxyurl + baseUrl + API_KEY;
-  //   fetch(proxyurl + finalUrl)
-  //     .then(res => {
-  //       res
-  //         .json()
-  //         .then(data => {
-  //           console.log(data, "data");
-  //         })
-  //         .catch(err => console.log(err, "errrr"));
-  //     })
-  //     .catch(err => console.log(err, "outsideERR"));
-  // }
 
-  searchByZipCode = zip => {
-    const url = searchZipCodeUrl + zip + API_KEY;
+  executeSearch = zip => {
     let locationData = {};
-    fetchLocationByZipCode(url)
+    fetchLocationByZipCode(zip)
       .then(data => {
-        data.results.map(item => {
-          locationData.title = item.formatted_address;
-          locationData.latitude = item.geometry.location.lat;
-          locationData.longitude = item.geometry.location.lng;
-        });
-        this.setState({
-          searchInfo: locationData
+        locationData.city_name = data.results.map(
+          item => item.formatted_address
+        );
+        locationData.lat = data.results.map(item => item.geometry.location.lat);
+        locationData.lng = data.results.map(item => item.geometry.location.lng);
+        fetchResturantList(locationData.lat, locationData.lng).then(res => {
+          this.setState({
+            searchInfo: locationData,
+            resturantData: res.results
+          });
         });
       })
       .catch(err => console.log(err, "err"));
@@ -52,7 +38,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <SearchBar getData={this.searchByZipCode} />
+          <SearchBar submitZipCode={this.executeSearch} />
         </div>
       </div>
     );

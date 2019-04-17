@@ -1,7 +1,7 @@
-import { searchZipCodeUrl } from "../utils/Constants";
+import { baseUrl } from "../utils/Constants";
 
-export const fetchLocationByZipCode = zip => {
-  const url = searchZipCodeUrl + zip;
+export const fetchResturantList = (latitude, longitude) => {
+  const url = baseUrl + latitude + "," + longitude;
   return new Promise((resolve, reject) => {
     fetch(url)
       .then(res => {
