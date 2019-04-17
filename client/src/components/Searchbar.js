@@ -18,7 +18,7 @@ class Searchbar extends Component {
   onFormSubmit = e => {
     e.preventDefault();
     //submit search term for get request.
-    console.log(this.state.searchInput, "Submitted Input");
+    this.props.getData(this.state.searchInput);
   };
   render() {
     return (
