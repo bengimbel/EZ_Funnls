@@ -18,9 +18,7 @@ class App extends Component {
     let locationData = {};
     fetchLocationByZipCode(zip)
       .then(data => {
-        locationData.city_name = data.results.map(
-          item => item.formatted_address
-        );
+        locationData.city = data.results.map(item => item.formatted_address);
         locationData.lat = data.results.map(item => item.geometry.location.lat);
         locationData.lng = data.results.map(item => item.geometry.location.lng);
         fetchResturantList(locationData.lat, locationData.lng).then(res => {
