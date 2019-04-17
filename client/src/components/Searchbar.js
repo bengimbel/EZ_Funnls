@@ -18,6 +18,9 @@ class Searchbar extends Component {
   onFormSubmit = e => {
     e.preventDefault();
     this.props.submitZipCode(this.state.searchInput);
+    this.setState({
+      searchInput: ""
+    });
   };
 
   render() {
