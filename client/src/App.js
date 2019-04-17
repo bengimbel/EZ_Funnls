@@ -47,8 +47,7 @@ class App extends Component {
 
   render() {
     console.log(this.state, "state");
-    const { resturantData } = this.state;
-    const { cityInfo } = this.state;
+    const { resturantData, cityInfo, visitedResturants } = this.state;
     return (
       <div className="App">
         <div className="container">
@@ -57,6 +56,7 @@ class App extends Component {
             resturantData={resturantData}
             cityName={cityInfo}
             saveResturant={this.saveResturantToVisitList}
+            visitedResturants={visitedResturants}
           />
         </div>
       </div>

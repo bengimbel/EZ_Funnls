@@ -5,10 +5,21 @@ class ResturantItem extends Component {
     super(props);
 
     this.state = {
-      resturantsVisited: [],
       saved: false
     };
   }
+  componentDidMount() {
+    if (
+      this.props.visitedResturants.filter(
+        item => item.id === this.props.resturantData.id
+      ).length > 0
+    ) {
+      this.setState({
+        saved: true
+      });
+    }
+  }
+
   addToList = () => {
     this.props.saveResturant(this.props.resturantData);
     this.setState((prevState, props) => {
