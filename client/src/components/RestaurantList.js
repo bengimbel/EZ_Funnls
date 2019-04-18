@@ -8,11 +8,14 @@ const RestaurantList = props => {
     visitedResturants,
     renderSearchList
   } = props;
+  const searchLocationTitle =
+    resturantData !== null ? `Search Location: ${cityName}` : "";
 
   if (renderSearchList) {
     return (
       <div>
-        <h1>{cityName}</h1>
+        <h3>{searchLocationTitle}</h3>
+
         {resturantData !== null &&
           resturantData.map(item => (
             <ResturantItem
@@ -22,13 +25,21 @@ const RestaurantList = props => {
               visitedResturants={visitedResturants}
             />
           ))}
+
+        {resturantData === null && (
+          <h4>Seach by zip code to show a list of resturants.</h4>
+        )}
+
+        {resturantData !== null && resturantData.length === 0 && (
+          <h4>Could not find resturants with that zip code.</h4>
+        )}
       </div>
     );
   } else {
     return (
       <div>
-        <h1>{cityName}</h1>
-        {visitedResturants !== null &&
+        <h3>Your List of Resturants</h3>
+        {visitedResturants.length > 0 &&
           visitedResturants.map(item => (
             <ResturantItem
               key={item.id}
@@ -37,6 +48,10 @@ const RestaurantList = props => {
               visitedResturants={visitedResturants}
             />
           ))}
+
+        {visitedResturants.length <= 0 && (
+          <h4>You have not saved any resturants to your list.</h4>
+        )}
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React from "react";
 
 const ToggleListButton = props => {
-  const buttonTabTitle = props.searchTab
+  const buttonTabTitle = props.searchTabTitle
     ? "Show Vistied Resturants"
     : "Show Searched Resturants";
   return (

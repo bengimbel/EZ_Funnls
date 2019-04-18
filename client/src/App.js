@@ -67,7 +67,10 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <SearchBar submitZipCode={this.executeSearch} />
+          <SearchBar
+            submitZipCode={this.executeSearch}
+            renderSearchList={() => this.setState({ searchTab: true })}
+          />
           <ToggleListButton
             switchSearchTerm={this.toggleList}
             searchTabTitle={searchTab}
