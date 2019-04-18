@@ -10,10 +10,9 @@ class ResturantItem extends Component {
   }
 
   componentDidMount() {
+    const { visitedResturants, resturantData } = this.props;
     if (
-      this.props.visitedResturants.filter(
-        item => item.id === this.props.resturantData.id
-      ).length > 0
+      visitedResturants.filter(item => item.id === resturantData.id).length > 0
     ) {
       this.setState({
         saved: true
