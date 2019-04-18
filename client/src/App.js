@@ -12,7 +12,7 @@ class App extends Component {
 
     this.state = {
       resturantData: null,
-      cityInfo: null,
+      cityTitle: null,
       visitedResturants: [],
       searchTab: true
     };
@@ -26,7 +26,7 @@ class App extends Component {
         const lng = data.results.map(item => item.geometry.location.lng);
         fetchResturantList(lat, lng).then(res => {
           this.setState({
-            cityInfo: city,
+            cityTitle: city,
             resturantData: res.results
           });
         });
@@ -59,7 +59,7 @@ class App extends Component {
     console.log(this.state, "state");
     const {
       resturantData,
-      cityInfo,
+      cityTitle,
       visitedResturants,
       searchTab
     } = this.state;
@@ -69,7 +69,8 @@ class App extends Component {
         <div className="container">
           <SearchBar
             submitZipCode={this.executeSearch}
-            renderSearchList={() => this.setState({ searchTab: true })}
+            renderSearchList={this.toggleList}
+            isSearchTabActive={searchTab}
           />
           <ToggleListButton
             switchSearchTerm={this.toggleList}
@@ -77,7 +78,7 @@ class App extends Component {
           />
           <ResturantList
             resturantData={resturantData}
-            cityName={cityInfo}
+            cityName={cityTitle}
             saveResturant={this.saveResturantToVisitList}
             visitedResturants={visitedResturants}
             renderSearchList={searchTab}

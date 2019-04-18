@@ -17,21 +17,26 @@ class Searchbar extends Component {
 
   onFormSubmit = e => {
     e.preventDefault();
-    this.props.submitZipCode(this.state.searchInput);
-    this.props.renderSearchList();
+    const { isSearchTabActive, submitZipCode, renderSearchList } = this.props;
+    const { searchInput } = this.state;
+    submitZipCode(searchInput);
+    if (!isSearchTabActive) {
+      renderSearchList();
+    }
     this.setState({
       searchInput: ""
     });
   };
 
   render() {
+    const { searchInput } = this.state;
     return (
       <div>
         <form onSubmit={this.onFormSubmit} className="input-group">
           <input
             placeholder="Search resturants by zip code"
             className="form-control"
-            value={this.state.searchInput}
+            value={searchInput}
             onChange={this.handleInputChange}
           />
           <span className="input-group-btn">
