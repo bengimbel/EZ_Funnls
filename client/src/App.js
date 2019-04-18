@@ -4,6 +4,7 @@ import ResturantList from "./components/RestaurantList";
 import { fetchLocationByZipCode } from "./api/FetchLocationByZipCode";
 import { fetchResturantList } from "./api/FetchResturantList";
 import "./App.css";
+import ToggleListButton from "./components/ToggleListButton";
 
 class App extends Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class App extends Component {
     this.state = {
       resturantData: null,
       cityInfo: null,
-      visitedResturants: []
+      visitedResturants: [],
+      searchTab: true
     };
   }
 
@@ -45,18 +47,37 @@ class App extends Component {
     });
   };
 
+  toggleList = () => {
+    this.setState(prevState => {
+      return {
+        searchTab: !prevState.searchTab
+      };
+    });
+  };
+
   render() {
     console.log(this.state, "state");
-    const { resturantData, cityInfo, visitedResturants } = this.state;
+    const {
+      resturantData,
+      cityInfo,
+      visitedResturants,
+      searchTab
+    } = this.state;
+
     return (
       <div className="App">
         <div className="container">
           <SearchBar submitZipCode={this.executeSearch} />
+          <ToggleListButton
+            switchSearchTerm={this.toggleList}
+            searchTabTitle={searchTab}
+          />
           <ResturantList
             resturantData={resturantData}
             cityName={cityInfo}
             saveResturant={this.saveResturantToVisitList}
             visitedResturants={visitedResturants}
+            renderSearchList={searchTab}
           />
         </div>
       </div>
