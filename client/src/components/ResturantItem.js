@@ -8,6 +8,7 @@ class ResturantItem extends Component {
       saved: false
     };
   }
+
   componentDidMount() {
     if (
       this.props.visitedResturants.filter(
@@ -21,8 +22,9 @@ class ResturantItem extends Component {
   }
 
   addToList = () => {
-    this.props.saveResturant(this.props.resturantData);
-    this.setState((prevState, props) => {
+    const { saveResturant, resturantData } = this.props;
+    saveResturant(resturantData);
+    this.setState(prevState => {
       return {
         saved: !prevState.saved
       };
