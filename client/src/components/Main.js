@@ -16,6 +16,11 @@ class Main extends Component {
       searchTab: true
     };
   }
+
+  componentDidMount() {
+    this.loadStateWithLocalStorage();
+  }
+
   executeSearch = zip => {
     fetchLocationByZipCode(zip)
       .then(data => {
@@ -43,6 +48,8 @@ class Main extends Component {
     this.setState({
       visitedResturants: newList
     });
+
+    localStorage.setItem("visitedResturants", JSON.stringify(newList));
   };
 
   toggleList = () => {
@@ -53,6 +60,15 @@ class Main extends Component {
     });
   };
 
+  loadStateWithLocalStorage() {
+    const keyName = "visitedResturants";
+    if (localStorage.hasOwnProperty(keyName)) {
+      let value = localStorage.getItem(keyName);
+      value = JSON.parse(value);
+      this.setState({ visitedResturants: value });
+    }
+  }
+
   render() {
     console.log(this.state, "state");
     const {
@@ -61,6 +77,7 @@ class Main extends Component {
       visitedResturants,
       searchTab
     } = this.state;
+
     return (
       <div className="container">
         <SearchBar
