@@ -9,7 +9,7 @@ class ResturantItem extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { visitedResturants, resturantData } = this.props;
     if (
       visitedResturants.filter(item => item.id === resturantData.id).length > 0
@@ -18,7 +18,7 @@ class ResturantItem extends Component {
         saved: true
       });
     }
-  }
+  };
 
   addToList = () => {
     const { saveResturant, resturantData } = this.props;
@@ -43,14 +43,27 @@ class ResturantItem extends Component {
       </button>
     );
     return (
-      <div>
-        {name}
-        {vicinity}
-        {rating}
-        {renderButton}
+      <div style={styles.rowItem}>
+        <p style={styles.text}>{name}</p>
+        <p style={styles.text}>{vicinity}</p>
+        <p style={styles.text}>{rating}</p>
+        <p style={styles.text}>{renderButton}</p>
       </div>
     );
   }
 }
 
 export default ResturantItem;
+
+const styles = {
+  rowItem: {
+    display: "flex",
+    flexDirection: "column",
+    border: "1px solid black",
+    margin: "10px"
+  },
+  text: {
+    margin: "0",
+    padding: "0"
+  }
+};

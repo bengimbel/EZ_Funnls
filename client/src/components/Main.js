@@ -4,6 +4,7 @@ import ResturantList from "./RestaurantList";
 import { fetchLocationByZipCode } from "../api/FetchLocationByZipCode";
 import { fetchResturantList } from "../api/FetchResturantList";
 import ToggleListButton from "./ToggleListButton";
+import GoogleMap from "./GoogleMap";
 
 class Main extends Component {
   constructor(props) {
@@ -17,9 +18,9 @@ class Main extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.loadStateWithLocalStorage();
-  }
+  };
 
   executeSearch = zip => {
     fetchLocationByZipCode(zip)
@@ -30,7 +31,9 @@ class Main extends Component {
         fetchResturantList(lat, lng).then(res => {
           this.setState({
             cityTitle: city,
-            resturantData: res.results
+            resturantData: res.results,
+            lat: lat,
+            lng: lng
           });
         });
       })
@@ -60,14 +63,14 @@ class Main extends Component {
     });
   };
 
-  loadStateWithLocalStorage() {
+  loadStateWithLocalStorage = () => {
     const keyName = "visitedResturants";
     if (localStorage.hasOwnProperty(keyName)) {
       let value = localStorage.getItem(keyName);
       value = JSON.parse(value);
       this.setState({ visitedResturants: value });
     }
-  }
+  };
 
   render() {
     console.log(this.state, "state");
@@ -75,30 +78,49 @@ class Main extends Component {
       resturantData,
       cityTitle,
       visitedResturants,
-      searchTab
+      searchTab,
+      lat,
+      lng
     } = this.state;
 
     return (
       <div className="container">
-        <SearchBar
-          submitZipCode={this.executeSearch}
-          renderSearchList={this.toggleList}
-          isSearchTabActive={searchTab}
-        />
-        <ToggleListButton
-          switchSearchTerm={this.toggleList}
-          searchTabTitle={searchTab}
-        />
-        <ResturantList
-          resturantData={resturantData}
-          cityName={cityTitle}
-          saveResturant={this.saveResturantToVisitList}
-          visitedResturants={visitedResturants}
-          renderSearchList={searchTab}
-        />
+        <div className="row" style={styles.searchBar}>
+          <div className="col">
+            <SearchBar
+              submitZipCode={this.executeSearch}
+              renderSearchList={this.toggleList}
+              isSearchTabActive={searchTab}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <GoogleMap lat={lat} lng={lng} />
+          </div>
+          <div className="col">
+            <ToggleListButton
+              switchSearchTerm={this.toggleList}
+              searchTabTitle={searchTab}
+            />
+            <ResturantList
+              resturantData={resturantData}
+              cityName={cityTitle}
+              saveResturant={this.saveResturantToVisitList}
+              visitedResturants={visitedResturants}
+              renderSearchList={searchTab}
+            />
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 export default Main;
+
+const styles = {
+  searchBar: {
+    marginBottom: "20px"
+  }
+};
