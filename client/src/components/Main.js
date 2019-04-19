@@ -96,7 +96,7 @@ class Main extends Component {
         </div>
         <div className="row">
           <div className="col">
-            <GoogleMap lat={lat} lng={lng} />
+            <GoogleMap lat={lat} lng={lng} cityName={cityTitle} />
           </div>
           <div className="col">
             <ToggleListButton
