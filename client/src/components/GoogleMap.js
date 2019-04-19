@@ -60,7 +60,7 @@ export default GoogleApiWrapper({
 
 const styles = {
   mapStyle: {
-    width: "500px",
+    width: "95%",
     height: "300px"
   }
 };
