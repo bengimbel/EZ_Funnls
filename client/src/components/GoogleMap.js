@@ -3,28 +3,51 @@ import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 
 class GoogleMap extends Component {
   shouldComponentUpdate(nextProps) {
-    if (this.props.cityName !== nextProps.cityName) {
+    if (
+      nextProps.resturantData !== null &&
+      nextProps.resturantData.length === 0
+    ) {
+      return false;
+    }
+    if (this.props.resturantData !== nextProps.resturantData) {
       return true;
     }
+
     return false;
   }
+
+  renderMarkers = () => {
+    const { resturantData } = this.props;
+    if (resturantData !== null) {
+      return resturantData.map(item => {
+        return (
+          <Marker
+            key={item.id}
+            position={{
+              lat: item.geometry.location.lat,
+              lng: item.geometry.location.lng
+            }}
+          />
+        );
+      });
+    }
+  };
   render() {
     const { google, lat, lng, cityName } = this.props;
-
     return (
       <div className="container">
         <div className="row">{cityName}</div>
         <div className="row">
           <Map
             google={google}
-            zoom={11}
+            zoom={13}
             style={styles.mapStyle}
             center={{
               lat: lat,
               lng: lng
             }}
           >
-            <Marker position={{ lat: lat, lng: lng }} />
+            {this.renderMarkers()}
           </Map>
         </div>
       </div>

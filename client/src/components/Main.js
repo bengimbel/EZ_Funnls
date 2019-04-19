@@ -44,7 +44,6 @@ class Main extends Component {
     const { visitedResturants } = this.state;
     const newList = [...visitedResturants];
     if (newList.filter(item => item.id === resturant.id).length > 0) {
-      console.log("already in favorites");
       return;
     }
     newList.unshift(resturant);
@@ -85,7 +84,12 @@ class Main extends Component {
 
     return (
       <div className="container">
-        <div className="row" style={styles.searchBar}>
+        <div className="row" style={styles.headerTitle}>
+          <div className="col">
+            <h1>EZ Funnls</h1>
+          </div>
+        </div>
+        <div className="row" style={styles.headerSearchbar}>
           <div className="col">
             <SearchBar
               submitZipCode={this.executeSearch}
@@ -94,9 +98,15 @@ class Main extends Component {
             />
           </div>
         </div>
+
         <div className="row">
           <div className="col">
-            <GoogleMap lat={lat} lng={lng} cityName={cityTitle} />
+            <GoogleMap
+              lat={lat}
+              lng={lng}
+              cityName={cityTitle}
+              resturantData={resturantData}
+            />
           </div>
           <div className="col">
             <ToggleListButton
@@ -120,7 +130,12 @@ class Main extends Component {
 export default Main;
 
 const styles = {
-  searchBar: {
+  headerTitle: {
+    marginBottom: "20px",
+    marginTop: "20px",
+    textAlign: "center"
+  },
+  headerSearchbar: {
     marginBottom: "20px"
   }
 };
