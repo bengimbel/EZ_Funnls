@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 
-const mapStyles = {
-  width: "500px",
-  height: "300px"
-};
-const API_KEY = process.env.REACT_APP_API_KEY;
 class GoogleMap extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.cityName !== nextProps.cityName) {
+      return true;
+    }
+    return false;
+  }
   render() {
-    console.log(this.props, "props");
     const { google, lat, lng, cityName } = this.props;
+
     return (
       <div className="container">
         <div className="row">{cityName}</div>
@@ -17,7 +18,7 @@ class GoogleMap extends Component {
           <Map
             google={google}
             zoom={11}
-            style={mapStyles}
+            style={styles.mapStyle}
             center={{
               lat: lat,
               lng: lng
@@ -31,5 +32,12 @@ class GoogleMap extends Component {
   }
 }
 export default GoogleApiWrapper({
-  apiKey: API_KEY
+  apiKey: process.env.REACT_APP_API_KEY
 })(GoogleMap);
+
+const styles = {
+  mapStyle: {
+    width: "500px",
+    height: "300px"
+  }
+};
