@@ -31,23 +31,35 @@ class Searchbar extends Component {
   render() {
     const { searchInput } = this.state;
     return (
-      <div>
-        <form onSubmit={this.onFormSubmit} className="input-group">
-          <input
-            placeholder="Search resturants by zip code"
-            className="form-control"
-            value={searchInput}
-            onChange={this.handleInputChange}
-          />
-          <span className="input-group-btn">
-            <button type="submit" className="btn btn-primary">
-              Search
-            </button>
-          </span>
-        </form>
+      <div className="container">
+        <div className="row">
+          <form onSubmit={this.onFormSubmit} className="input-group">
+            <div className="col-10 justify-content-center">
+              <input
+                placeholder="Search resturants by zip code"
+                className="form-control"
+                value={searchInput}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="col-2 justify-content-center">
+              <span className="input-group-btn">
+                <button type="submit" className="btn btn-primary">
+                  Search
+                </button>
+              </span>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }
 }
 
 export default Searchbar;
+
+const styles = {
+  button: {
+    marginLeft: "10px"
+  }
+};

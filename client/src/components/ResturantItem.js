@@ -34,21 +34,38 @@ class ResturantItem extends Component {
     const { name, vicinity, rating } = this.props.resturantData;
     const { saved } = this.state;
     const renderButton = saved ? (
-      <button className="btn btn-success" disabled>
+      <button className="btn btn-success btn-sm" disabled>
         Saved!
       </button>
     ) : (
-      <button className="btn btn-primary" onClick={this.addToList}>
+      <button className="btn btn-primary btn-sm" onClick={this.addToList}>
         Save Resturant
       </button>
     );
     return (
-      <div style={styles.rowItem}>
-        <p style={styles.text}>{name}</p>
-        <p style={styles.text}>{vicinity}</p>
-        <p style={styles.text}>{rating}</p>
-        <p style={styles.text}>{renderButton}</p>
+      <div className="container" style={styles.container}>
+        <div className="row" style={styles.rowItem}>
+          <div className="col-8">
+            <div className="row">
+              <h6 style={styles.resturantName}>{name}</h6>
+            </div>
+            <div className="row">
+              <p style={styles.text}>{vicinity}</p>
+            </div>
+            <div className="row">
+              <p style={styles.text}>{rating}</p>
+            </div>
+          </div>
+          <div className="col-4 text-right align-self-center">
+            <p className="text-right" style={styles.text}>
+              {renderButton}
+            </p>
+          </div>
+        </div>
       </div>
+      //   <div style={styles.rowItem}>
+
+      //   </div>
     );
   }
 }
@@ -56,14 +73,22 @@ class ResturantItem extends Component {
 export default ResturantItem;
 
 const styles = {
+  container: {
+    // border: "1px solid #E8E8E8",
+    margin: "10px",
+    backgroundColor: "#E8E8E8"
+  },
   rowItem: {
-    display: "flex",
-    flexDirection: "column",
-    border: "1px solid black",
-    margin: "10px"
+    padding: "10px"
+  },
+  resturantName: {
+    margin: "0",
+    padding: "0"
+    // fontSize: "14px"
   },
   text: {
     margin: "0",
-    padding: "0"
+    padding: "0",
+    fontSize: "14px"
   }
 };

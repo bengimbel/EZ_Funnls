@@ -5,13 +5,17 @@ const ToggleListButton = props => {
     ? "Show Vistied Resturants"
     : "Show Searched Resturants";
   return (
-    <div>
-      <button
-        className="btn btn-danger"
-        onClick={() => props.switchSearchTerm()}
-      >
-        {buttonTabTitle}
-      </button>
+    <div className="container">
+      <div className="row">
+        <div className="col text-center">
+          <button
+            className="btn btn-danger"
+            onClick={() => props.switchSearchTerm()}
+          >
+            {buttonTabTitle}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
