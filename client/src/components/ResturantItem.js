@@ -63,9 +63,6 @@ class ResturantItem extends Component {
           </div>
         </div>
       </div>
-      //   <div style={styles.rowItem}>
-
-      //   </div>
     );
   }
 }
@@ -74,7 +71,7 @@ export default ResturantItem;
 
 const styles = {
   container: {
-    // border: "1px solid #E8E8E8",
+    border: "1px solid #E8E8E8",
     margin: "10px",
     backgroundColor: "#E8E8E8"
   },
@@ -84,7 +81,6 @@ const styles = {
   resturantName: {
     margin: "0",
     padding: "0"
-    // fontSize: "14px"
   },
   text: {
     margin: "0",

@@ -57,9 +57,3 @@ class Searchbar extends Component {
 }
 
 export default Searchbar;
-
-const styles = {
-  button: {
-    marginLeft: "10px"
-  }
-};
