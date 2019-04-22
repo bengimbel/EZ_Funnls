@@ -32,7 +32,7 @@ class Main extends Component {
       nextProps.savedResturantList.savedResturants
     ) {
       this.setState({
-        visitedResturants: nextProps.savedResturantList.savedResturants
+        visitedResturants: nextProps.savedResturantList.savedResturants.reverse()
       });
     }
   }
