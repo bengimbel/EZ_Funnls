@@ -19,6 +19,7 @@ class Main extends Component {
       searchTab: true
     };
   }
+
   //WHEN COMPONENT MOUNTS, INJECT THE PAGE WITH LOCAL STORAGE
 
   //   componentDidMount = () => {
@@ -59,7 +60,7 @@ class Main extends Component {
       variables: {
         id: resturant.id,
         name: resturant.name,
-        address: resturant.vicinity,
+        vicinity: resturant.vicinity,
         rating: resturant.rating,
         lat: resturant.geometry.location.lat,
         lng: resturant.geometry.location.lng

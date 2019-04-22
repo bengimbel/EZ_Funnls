@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const resturantSchema = new Schema({
   id: String,
   name: String,
-  address: String,
+  vicinity: String,
   rating: Number,
   lat: Number,
   lng: Number

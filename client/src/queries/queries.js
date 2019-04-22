@@ -4,7 +4,7 @@ const addResturant = gql`
   mutation(
     $id: ID!
     $name: String!
-    $address: String!
+    $vicinity: String!
     $rating: Float!
     $lat: Float!
     $lng: Float!
@@ -12,14 +12,14 @@ const addResturant = gql`
     addResturant(
       id: $id
       name: $name
-      address: $address
+      vicinity: $vicinity
       rating: $rating
       lat: $lat
       lng: $lng
     ) {
       id
       name
-      address
+      vicinity
       rating
       lat
       lng
@@ -32,10 +32,8 @@ const savedResturantList = gql`
     savedResturants {
       id
       name
-      address
+      vicinity
       rating
-      lat
-      lng
     }
   }
 `;
