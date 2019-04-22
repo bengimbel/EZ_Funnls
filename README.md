@@ -1,0 +1,1 @@
+This is a coding challenge for EZ Funnls. To run this project, run "npm install" in the root directory, then go into the client folder, and run "yarn install". Once everything is installed, go into the root directory and run "node server.js" then open a new tab in the terminal, and go into client folder and run "yarn start".
