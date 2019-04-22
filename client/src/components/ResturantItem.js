@@ -56,7 +56,7 @@ class ResturantItem extends Component {
               <p style={styles.text}>{vicinity}</p>
             </div>
             <div className="row">
-              <p style={styles.text}>{rating}</p>
+              <p style={styles.text}>Rating: {rating}</p>
             </div>
           </div>
           <div className="col-4 text-right align-self-center">
