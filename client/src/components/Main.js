@@ -5,6 +5,8 @@ import { fetchLocationByZipCode } from "../api/FetchLocationByZipCode";
 import { fetchResturantList } from "../api/FetchResturantList";
 import ToggleListButton from "./ToggleListButton";
 import GoogleMap from "./GoogleMap";
+import { graphql, compose } from "react-apollo";
+import { savedResturantList, addResturant } from "../queries/queries";
 
 class Main extends Component {
   constructor(props) {
@@ -17,10 +19,22 @@ class Main extends Component {
       searchTab: true
     };
   }
+  //WHEN COMPONENT MOUNTS, INJECT THE PAGE WITH LOCAL STORAGE
 
-  componentDidMount = () => {
-    this.loadStateWithLocalStorage();
-  };
+  //   componentDidMount = () => {
+  //     this.loadStateWithLocalStorage();
+  //   };
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.savedResturantList.savedResturants !==
+      nextProps.savedResturantList.savedResturants
+    ) {
+      this.setState({
+        visitedResturants: nextProps.savedResturantList.savedResturants
+      });
+    }
+  }
 
   executeSearch = zip => {
     fetchLocationByZipCode(zip)
@@ -41,17 +55,30 @@ class Main extends Component {
   };
 
   saveResturantToVisitList = resturant => {
-    const { visitedResturants } = this.state;
-    const newList = [...visitedResturants];
-    if (newList.filter(item => item.id === resturant.id).length > 0) {
-      return;
-    }
-    newList.unshift(resturant);
-    this.setState({
-      visitedResturants: newList
+    this.props.addResturant({
+      variables: {
+        id: resturant.id,
+        name: resturant.name,
+        address: resturant.vicinity,
+        rating: resturant.rating,
+        lat: resturant.geometry.location.lat,
+        lng: resturant.geometry.location.lng
+      },
+      refetchQueries: [{ query: savedResturantList }]
     });
 
-    localStorage.setItem("visitedResturants", JSON.stringify(newList));
+    // COPY VISITIED RESTURANTS AND ADD RESTURANT TO LIST. SAVE TO STATE AND TO LOCAL STORAGE
+
+    // const { visitedResturants } = this.state;
+    // const newList = [...visitedResturants];
+    // if (newList.filter(item => item.id === resturant.id).length > 0) {
+    //   return;
+    // }
+    // newList.unshift(resturant);
+    // this.setState({
+    //   visitedResturants: newList
+    // });
+    // localStorage.setItem("visitedResturants", JSON.stringify(newList));
   };
 
   toggleList = () => {
@@ -62,17 +89,18 @@ class Main extends Component {
     });
   };
 
-  loadStateWithLocalStorage = () => {
-    const keyName = "visitedResturants";
-    if (localStorage.hasOwnProperty(keyName)) {
-      let value = localStorage.getItem(keyName);
-      value = JSON.parse(value);
-      this.setState({ visitedResturants: value });
-    }
-  };
+  // FUNCTION TO LOAD PAGE WITH LOCAL STORAGE
+
+  //   loadStateWithLocalStorage = () => {
+  //     const keyName = "visitedResturants";
+  //     if (localStorage.hasOwnProperty(keyName)) {
+  //       let value = localStorage.getItem(keyName);
+  //       value = JSON.parse(value);
+  //       this.setState({ visitedResturants: value });
+  //     }
+  //   };
 
   render() {
-    console.log(this.state, "state");
     const {
       resturantData,
       cityTitle,
@@ -98,7 +126,6 @@ class Main extends Component {
             />
           </div>
         </div>
-
         <div className="row">
           <div className="col">
             <GoogleMap
@@ -126,8 +153,10 @@ class Main extends Component {
     );
   }
 }
-
-export default Main;
+export default compose(
+  graphql(savedResturantList, { name: "savedResturantList" }),
+  graphql(addResturant, { name: "addResturant" })
+)(Main);
 
 const styles = {
   headerTitle: {

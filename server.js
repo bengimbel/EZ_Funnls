@@ -6,10 +6,13 @@ const graphqlHTTP = require("express-graphql");
 const app = express();
 const schema = require("./schema");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
-mongoose.connect(
-  "mongodb://bengimbel:bengimbel123@ds137255.mlab.com:37255/ez-funnls"
-);
+app.use(cors());
+const mongoURI =
+  "mongodb://bengimbel:bengimbel123@ds137255.mlab.com:37255/ez-funnls";
+
+mongoose.connect(mongoURI, { useNewUrlParser: true });
 mongoose.connection.once("open", () => {
   console.log("connected to EZ-Funnls database");
 });
